@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CategoryContext } from "../../contexts/categoryContext";
+import { CategoryContext } from "../../contexts/CategoryContext";
 
 const UserNavBar = () => {
   const { filterProducts } = useContext(CategoryContext);
