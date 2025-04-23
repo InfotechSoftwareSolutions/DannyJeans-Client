@@ -131,7 +131,7 @@ const UserFooter = () => {
 
           {/* Social Icons */}
           <div className="col-md-2">
-            <h6 className="fw-bold">Follow Us</h6>
+            <h6 className="fw-bold">Follow Ussss</h6>
             <div className="d-flex justify-content-center justify-content-md-start gap-3 mt-2">
               <a href="https://www.facebook.com/dannyfashionsofficial/" className="text-light fs-5">
                 <FaFacebookF />
