@@ -147,6 +147,20 @@ const changeDetail = async (data) => {
     return response.data;
 };
 
+//get trending products
+
+const getTrendingProducts = async () => {
+    const response = await axiosPrivate.get("/product/trending");
+    return response.data;
+  };
+
+  //get today's offer
+    const getTodaysOffer = async () => {
+        const response = await axiosPrivate.get("/product/today-offers");
+        return response.data;
+    };
+
+
 
     return { 
         postRegister,
@@ -169,7 +183,9 @@ const changeDetail = async (data) => {
         getAllAddress,
         getAllOrders,
         getUserDetail,
-        changeDetail
+        changeDetail,
+        getTrendingProducts,
+        getTodaysOffer,
     };
 };
 

@@ -18,7 +18,8 @@ import UserNavBar from "../../components/user/UserNavBar";
 
 
 const App = () => {
-  const { addToCart,addToWihlist,getHomePageData } = UserService()
+  const { addToCart,addToWihlist,getHomePageData,getTrendingProducts,
+    getTodaysOffer} = UserService()
   // const {products,setProducts,} = useContext(CategoryContext);
 
   const scrollRef = useRef(null);
@@ -29,6 +30,8 @@ const [products, setProducts] = useState([]);
 const [error,setError] = useState()
 const [loading, setLoading] = useState()
 const [newArrival, setNewArrival] = useState([]);
+const [subFilter, setSubFilter] = useState([]);
+const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
   
 
   useEffect(() => {
@@ -41,6 +44,7 @@ const [newArrival, setNewArrival] = useState([]);
       console.log(response.products,"datas");
       setProducts(response.products);
       const newArr = response?.newArrivedProducts.slice(0, 5); // Removes the first 3 elements
+      setSubFilter(newArr);
 
       setNewArrival(newArr);
       
@@ -104,6 +108,34 @@ const [newArrival, setNewArrival] = useState([]);
   }
 
 
+  const handleSubFilter = async (value) => {
+    try {
+      console.log("handleSubFilter");
+      console.log(value, "subfilter value");
+      
+      
+      if (value === "trending") {
+        const response = await getTrendingProducts();
+        console.log(response, "trending products");
+        setSubFilterHeading("Top Trending Now")
+        setSubFilter(response.products);
+      }else if (value === "offers") {
+        // Handle today's offers click    
+      const response = await getTodaysOffer();
+      console.log(response, "trending products");
+      setSubFilterHeading("Today's Offers") 
+      setSubFilter(response.products);
+
+      }else if (value === "newArrivals") {
+        // Handle new arrivals click  
+      // console.log(response, "trending products");
+      setSubFilterHeading("New Arrivals")
+      
+      setSubFilter(newArrival);
+    }} catch (error) {
+      console.error("Error fetching trending products:", error);
+    }
+  };
 
 
 
@@ -178,9 +210,10 @@ const [newArrival, setNewArrival] = useState([]);
         alt="Top Trending"
         className="w-full h-[150px] object-cover rounded-lg"
       />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity">
-        Click Now
-      </button>
+      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity" 
+              onClick={()=> handleSubFilter("trending")}>
+                Click Now
+              </button>
     </div>
   </div>
 
@@ -193,7 +226,8 @@ const [newArrival, setNewArrival] = useState([]);
         alt="Today's Offers"
         className="w-full h-[150px] object-cover rounded-lg"
       />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity">
+      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
+      onClick={()=> handleSubFilter("offers")}>
         Click Now
       </button>
     </div>
@@ -223,7 +257,8 @@ const [newArrival, setNewArrival] = useState([]);
         alt="New Arrivals"
         className="w-full h-[150px] object-cover rounded-lg "
       />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity">
+      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
+      onClick={()=> handleSubFilter("newArrivals")}>
         Click Now
       </button>
     </div>
@@ -265,7 +300,7 @@ const [newArrival, setNewArrival] = useState([]);
 
       
       <div className="text-center my-3" style={{ fontSize: "34px" }}>
-        <strong>NEW ARRIVALS</strong>
+        <strong>{subFilterHeading}</strong>
       </div>
       <div className="position-relative container">
       {/* Left Scroll Button */}
@@ -283,7 +318,7 @@ const [newArrival, setNewArrival] = useState([]);
         style={{ scrollBehavior: "smooth", gap: "20px" }}
         ref={scrollRef}
       >
-        {newArrival.map((product, index) => (
+        {subFilter.map((product, index) => (
           <div
             className="card position-relative flex-shrink-0"
             key={index}
