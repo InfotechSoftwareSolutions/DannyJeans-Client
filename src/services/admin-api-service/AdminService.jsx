@@ -85,9 +85,15 @@ const AdminService = () => {
         return response.data;
      };
 
+    //get all home data
+    const getAllCategoryeData = async () => {
+        const response = await axiosPrivate.get("/category/all");
+        return response.data;
+     };
+
         //get all home data
         const getProductData = async () => {
-            const response = await axiosPrivate.get("/product");
+            const response = await axiosPrivate.get("/product/all");
             return response.data;
         };
 
@@ -99,7 +105,7 @@ const AdminService = () => {
 
       //get all home data
       const getOffer = async () => {
-        const response = await axiosPrivate.get("/offer/");
+        const response = await axiosPrivate.get("/offer/all");
         return response.data;
      };
 
@@ -158,7 +164,8 @@ const AdminService = () => {
         getWeeklyOrder,
         getsalesByCategory,
         returnProcess,
-        updateOffer
+        updateOffer,
+        getAllCategoryeData
     };
 };
 
