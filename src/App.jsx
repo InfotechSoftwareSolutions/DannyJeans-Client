@@ -36,7 +36,11 @@ import Order from "./pages/user/Order";
 import Return from "./pages/user/Return"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ReturnPolicy from "./pages/user/ReturnPolicy";
+import PrivacyPolicy from "./pages/user/PrivacyPolicy";
+import TermsandConditions from "./pages/user/TermsandConditions";
 import UserLayout from "./components/layout/user-layout/UserLayout";
+import Contact from "./pages/user/Contact";
 
 
 
@@ -76,6 +80,10 @@ function App() {
           <Route path="/productlisting" element={<ProductListing />} />
           <Route path="/order" element={<Order />} />
           <Route path="/return" element={<Return />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsandConditions />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         
