@@ -1,12 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CategoryContext } from "../../contexts/CategoryContext";
+import { CategoryContext } from "../../contexts/categoryContext";
+import UserService from "../../services/user-api-service/UserService"; // Adjust path if needed
+
+
 
 const UserNavBar = () => {
   const { filterProducts } = useContext(CategoryContext);
   const [categories, setCategories] = useState([]);
   const [isNavOpen, setIsNavOpen] = useState(window.innerWidth >= 768); // Default true if above md
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+
+  const { getSearchResults } = UserService(); // Import the function from your service
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const results = await getSearchResults(searchTerm);
+      console.log("Search results:", results);
+      // Optionally pass results to parent, or route to a results page
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
+  };
 
   const toggleNavbar = () => {
     if (window.innerWidth < 768) {
@@ -47,11 +65,7 @@ const UserNavBar = () => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img
-            src="/logo.png"
-            alt="Danny Jean Logo"
-            style={{ height: "50px" }}
-          />
+          <img src="/logo.png" alt="Danny Jean Logo" style={{ height: "50px" }} />
         </Link>
 
         {/* Toggle Button */}
@@ -60,58 +74,29 @@ const UserNavBar = () => {
         </button>
 
         {/* Navbar Collapse */}
-        <div
-          className={`navbar-collapse ${isNavOpen ? "show" : "collapse"}`}
-          id="navbarSupportedContent"
-        >
+        <div className={`navbar-collapse ${isNavOpen ? "show" : "collapse"}`} id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center w-100 fw-bold text-uppercase">
+            
             <li className="nav-item">
-              <Link className="nav-link text-danger" to="/sale">
-                Sale
-              </Link>
+              <Link className="nav-link active" to="/">Home</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link active" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                onClick={() => handleScrollToStyleSection("style-section")}
-              >
-                New Arrival
-              </Link>
-            </li>
+            
 
             {/* Men Dropdown */}
-            <li
-              className="nav-item dropdown"
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-            >
-              <button
-                className="nav-link dropdown-toggle btn btn-link"
-                type="button"
-              >
-                MEN
-              </button>
-              <ul className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" role="button">
+                Men
+              </a>
+              <ul className="dropdown-menu">
                 <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => fetchCategories()}
-                  >
+                  <button className="dropdown-item" onClick={() => fetchCategories()}>
                     All
                   </button>
                 </li>
                 {categories.length > 0 ? (
                   categories.map((category) => (
                     <li key={category._id}>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => filterProducts(category._id)}
-                      >
+                      <button className="dropdown-item" onClick={() => filterProducts(category._id)}>
                         {category.name}
                       </button>
                     </li>
@@ -121,37 +106,43 @@ const UserNavBar = () => {
                 )}
               </ul>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about-us">
-                About Us
-              </Link>
-            </li>
+
           </ul>
 
           {/* Search Bar */}
-          <form className="d-flex w-50" role="search">
-            <input
-              className="form-control me-2 w-75"
-              type="search"
-              placeholder="Tell us what you are looking for"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+         
+          <form className="d-flex w-50" role="search" onSubmit={handleSearch}>
+  <input
+    className="form-control me-2 w-75"
+    type="search"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    placeholder="Tell us what you are looking for"
+    aria-label="Search"
+  />
+  <button className="btn btn-outline-success" type="submit">Search</button>
+</form>
+
 
           {/* Icons */}
           <div className="d-flex align-items-center ms-3">
-            <Link to="/wishlist" className="mx-3 icon-link">
-              <i className="far fa-heart"></i>
-            </Link>
-            <Link to="/cart" className="mx-3 icon-link">
-              <i className="fas fa-shopping-bag"></i>
-            </Link>
-            <Link to="/login" className="mx-3 icon-link">
-              <i className="fas fa-sign-in-alt"></i>
-            </Link>
+  <Link to="/wishlist" className="mx-3 icon-link" title="Wishlist">
+    <i className="far fa-heart"></i>
+  </Link>
+  <Link to="/cart" className="mx-3 icon-link" title="Cart">
+    <i className="fas fa-shopping-bag"></i>
+  </Link>
+  <Link to="/login" className="mx-3 icon-link" title="Login">
+    <i className="fas fa-sign-in-alt"></i>
+  </Link>
+  <Link to="/profile" className="mx-3 icon-link" title="Profile">
+    <i className="fas fa-user-circle"></i>
+  </Link>
+  <Link to="/logout" className="mx-3 icon-link" title="Logout">
+    <i className="fas fa-right-from-bracket"></i>
+  </Link>
+
+
           </div>
         </div>
       </div>
