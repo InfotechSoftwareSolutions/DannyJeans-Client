@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CategoryContext } from "../../contexts/categoryContext";
 import UserService from "../../services/user-api-service/UserService"; // Adjust path if needed
+import useAuth from "../../hooks/useAuth";
 
 
 
@@ -12,7 +13,7 @@ const UserNavBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
 
-
+  const { auth } = useAuth();
   const { getSearchResults } = UserService(); // Import the function from your service
 
   const handleSearch = async (e) => {
@@ -59,6 +60,13 @@ const UserNavBar = () => {
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
+  };
+    const onHandleLogout = async () => {
+    // Clear local storage
+    localStorage.clear();
+
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
   };
 
   return (
@@ -132,16 +140,29 @@ const UserNavBar = () => {
   <Link to="/cart" className="mx-3 icon-link" title="Cart">
     <i className="fas fa-shopping-bag"></i>
   </Link>
-  <Link to="/login" className="mx-3 icon-link" title="Login">
-    <i className="fas fa-sign-in-alt"></i>
-  </Link>
+
+  {auth?.name && (
   <Link to="/profile" className="mx-3 icon-link" title="Profile">
     <i className="fas fa-user-circle"></i>
   </Link>
-  <Link to="/logout" className="mx-3 icon-link" title="Logout">
-    <i className="fas fa-right-from-bracket"></i>
+  )}
+     {auth?.name && (
+  <Link onClick={onHandleLogout} className="mx-3 icon-link" title="Logout">
+    <i className="fas fa-sign-in-alt"></i>
   </Link>
-
+  )}
+   {!auth?.name && (
+  <Link to="/login" className="mx-3 icon-link" title="Login">
+    
+  <p className="text-sm mt-2">Login </p>
+  </Link>
+  )}
+  {!auth?.name && (
+  <Link to="/register" className="mx-3 icon-link" title="Logout">
+  
+  <p className="text-sm mt-2">Register</p>
+  </Link>
+  )}
 
           </div>
         </div>

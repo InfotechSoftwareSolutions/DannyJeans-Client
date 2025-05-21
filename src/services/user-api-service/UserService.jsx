@@ -159,6 +159,11 @@ const getTrendingProducts = async () => {
         const response = await axiosPrivate.get("/product/today-offers");
         return response.data;
     };
+    const getSingleProduct = async (productId) => {
+  const response = await axiosPrivate.get(`/product/${productId}`);
+  return response.data;
+};
+
 
 
 
@@ -186,6 +191,7 @@ const getTrendingProducts = async () => {
         changeDetail,
         getTrendingProducts,
         getTodaysOffer,
+        getSingleProduct
     };
 };
 

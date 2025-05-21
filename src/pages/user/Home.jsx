@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import UserService from "../../services/user-api-service/UserService";
 import toast, { Toaster } from 'react-hot-toast';
 import UserNavBar from "../../components/user/UserNavBar";
+import { Link, useNavigate } from "react-router-dom";
 // import { CategoryContext } from "../../contexts/CategoryContext";
 
 
@@ -21,7 +22,7 @@ const App = () => {
   const { addToCart,addToWihlist,getHomePageData,getTrendingProducts,
     getTodaysOffer} = UserService()
   // const {products,setProducts,} = useContext(CategoryContext);
-
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
 
 
@@ -87,7 +88,8 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
       console.log(response);
       toast.success(response?.message)
     } catch (error) {
-      toast.error(error?.response?.data?.message)
+     
+      navigate("/login");
     }
   
 
@@ -103,7 +105,8 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
     toast.success(response?.message)
     }
     catch(error){
-      toast.error(error?.response?.data?.message)
+      
+      navigate("/login");
     }
   }
 
@@ -198,43 +201,51 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
         <strong>BRANDED JEANS at 799 | FREE SHIPPING | CASH ON DELIVERY</strong>
       </div>
 
-      <div className="container mx-auto text-center my-5">
-  {/* Desktop View */}
-<div className="hidden md:flex justify-center gap-5">
-  {/* Top Trending Now */}
-  <div className="w-1/3 relative">
-    <h4 className="text-xl font-bold mb-2 text-center">Top Trending Now</h4>
-    <div className="relative group">
-      <img
-        src="/A1.jpg"
-        alt="Top Trending"
-        className="w-full h-[150px] object-cover rounded-lg"
-      />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity" 
-              onClick={()=> handleSubFilter("trending")}>
+    <div className="container mx-auto text-center my-5">
+        {/* Desktop View */}
+        <div className="hidden md:flex justify-center gap-5">
+          {/* Top Trending Now */}
+          <div className="w-1/3 relative">
+            <h4 className="text-xl font-bold mb-2 text-center">
+              Top Trending Now
+            </h4>
+            <div className="relative group">
+              <img
+                src="/A1.jpg"
+                alt="Top Trending"
+                className="w-full h-[150px] object-cover rounded-lg"
+              />
+              <button
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleSubFilter("trending")}
+              >
                 Click Now
               </button>
-    </div>
-  </div>
+            </div>
+          </div>
 
-  {/* Today's Offers */}
-  <div className="w-1/3 relative">
-    <h4 className="text-xl font-bold mb-2 text-center">Today's Offers</h4>
-    <div className="relative group">
-      <img
-        src="/Carnew.webp"
-        alt="Today's Offers"
-        className="w-full h-[150px] object-cover rounded-lg"
-      />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
-      onClick={()=> handleSubFilter("offers")}>
-        Click Now
-      </button>
-    </div>
-  </div>
+          {/* Today's Offers */}
+          <div className="w-1/3 relative">
+            <h4 className="text-xl font-bold mb-2 text-center">
+              Today's Offers
+            </h4>
+            <div className="relative group">
+              <img
+                src="/Carnew.webp"
+                alt="Today's Offers"
+                className="w-full h-[150px] object-cover rounded-lg"
+              />
+              <button
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleSubFilter("offers")}
+              >
+                Click Now
+              </button>
+            </div>
+          </div>
 
-  {/* New Arrivals */}
-  {/* <div className="w-1/3 relative">
+          {/* New Arrivals */}
+          {/* <div className="w-1/3 relative">
     <h4 className="text-xl font-bold mb-2 text-center">New Arrivals</h4>
     <div className="relative group">
       <img
@@ -249,121 +260,128 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
   </div>
 </div> */}
 
- <div className="w-1/3 relative">
-    <h4 className="text-xl font-bold mb-2 text-center">New Arrivals</h4>
-    <div className="relative group">
-      <img
-        src="/A2.jpg"
-        alt="New Arrivals"
-        className="w-full h-[150px] object-cover rounded-lg "
-      />
-      <button className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
-      onClick={()=> handleSubFilter("newArrivals")}>
-        Click Now
-      </button>
-    </div>
-  </div>
-</div>
-
-
-      {/* Mobile View */}
-      <div className="md:hidden flex justify-center gap-5">
-        <div className="flex flex-col items-center">
-          <img
-            src="/A1.jpg"
-            alt="Top Trending"
-            className="w-16 h-16 object-cover rounded-full"
-          />
-          <span className="text-sm font-medium mt-2">Top Trending</span>
+          <div className="w-1/3 relative">
+            <h4 className="text-xl font-bold mb-2 text-center">New Arrivals</h4>
+            <div className="relative group">
+              <img
+                src="/A2.jpg"
+                alt="New Arrivals"
+                className="w-full h-[150px] object-cover rounded-lg "
+              />
+              <button
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold py-2 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleSubFilter("newArrivals")}
+              >
+                Click Now
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col items-center">
-          <img
-            src="/Carnew.webp"
-            alt="Today's Offers"
-            className="w-16 h-16 object-cover rounded-full"
-          />
-          <span className="text-sm font-medium mt-2">Today's Offers</span>
-        </div>
+        {/* Mobile View */}
+        <div className="md:hidden flex justify-center gap-5">
+          <div className="flex flex-col items-center">
+            <img
+              src="/A1.jpg"
+              alt="Top Trending"
+              className="w-16 h-16 object-cover rounded-full"
+            />
+            <span className="text-sm font-medium mt-2">Top Trending</span>
+          </div>
 
-        <div className="flex flex-col items-center">
-          <img
-            src="/A2.jpg"
-            alt="New Arrivals"
-            className="w-16 h-16 object-cover rounded-full"
-          />
-          <span className="text-sm font-medium mt-2">New Arrivals</span>
+          <div className="flex flex-col items-center">
+            <img
+              src="/Carnew.webp"
+              alt="Today's Offers"
+              className="w-16 h-16 object-cover rounded-full"
+            />
+            <span className="text-sm font-medium mt-2">Today's Offers</span>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <img
+              src="/A2.jpg"
+              alt="New Arrivals"
+              className="w-16 h-16 object-cover rounded-full"
+            />
+            <span className="text-sm font-medium mt-2">New Arrivals</span>
+          </div>
         </div>
       </div>
-    </div>
 
 
       
-      <div className="text-center my-3" style={{ fontSize: "34px" }}>
+    <div className="text-center my-3" style={{ fontSize: "34px" }}>
         <strong>{subFilterHeading}</strong>
       </div>
       <div className="position-relative container">
-      {/* Left Scroll Button */}
-      <button
-        className="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
-        onClick={scrollLeft}
-        style={{ zIndex: 10 }}
-      >
-        &#10094;
-      </button>
+        {/* Left Scroll Button */}
+        <button
+          className="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
+          onClick={scrollLeft}
+          style={{ zIndex: 10 }}
+        >
+          &#10094;
+        </button>
 
-      {/* Scrollable Cards */}
-      <div
-        className="d-flex overflow-hidden"
-        style={{ scrollBehavior: "smooth", gap: "20px" }}
-        ref={scrollRef}
-      >
-        {subFilter.map((product, index) => (
-          <div
-            className="card position-relative flex-shrink-0"
-            key={index}
-            style={{ width: "100%", maxWidth: "300px" }}
-          >
-            <span
-              className="position-absolute badge bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow"
-              style={{
-                width: "50px",
-                height: "50px",
-                top: "15px",
-                left: "15px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
-              }}
+        {/* Scrollable Cards */}
+        <div
+          className="d-flex overflow-hidden"
+          style={{ scrollBehavior: "smooth", gap: "20px" }}
+          ref={scrollRef}
+        >
+          {subFilter.map((product, index) => (
+            <div
+              className="card position-relative flex-shrink-0"
+              key={index}
+              style={{ width: "100%", maxWidth: "300px" }}
             >
-              NEW!
-            </span>
-            <img src={product.images[0]} className="card-img-top" alt={product.name} />
-            <div className="card-body">
-              <h5 className="card-title">{product.name}</h5>
-              <p className="card-text">
-                <span className="fw-bold">₹{product.sale_price}</span>
-                <span className="text-decoration-line-through text-muted ms-2">
-                  ₹{product.product_price}
-                </span>
-              </p>
-              <p className="card-text">
-                <small className="text-body-secondary">Last updated 3 mins ago</small>
-              </p>
+              <span
+                className="position-absolute badge bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  top: "15px",
+                  left: "15px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
+                }}
+              >
+                NEW!
+              </span>
+              <img
+                src={product.images[0]}
+                className="card-img-top"
+                alt={product.name}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{product.name}</h5>
+                <p className="card-text">
+                  <span className="fw-bold">₹{product.sale_price}</span>
+                  <span className="text-decoration-line-through text-muted ms-2">
+                    ₹{product.product_price}
+                  </span>
+                </p>
+                <p className="card-text">
+                  <small className="text-body-secondary">
+                    Last updated 3 mins ago
+                  </small>
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Right Scroll Button */}
-      <button
-        className="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
-        onClick={scrollRight}
-        style={{ zIndex: 10 }}
-      >
-        &#10095;
-      </button>
-    </div>
+        {/* Right Scroll Button */}
+        <button
+          className="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
+          onClick={scrollRight}
+          style={{ zIndex: 10 }}
+        >
+          &#10095;
+        </button>
+      </div>
 
 
 
@@ -391,6 +409,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
           {products.map((product, index) => (
             <div className="col-md-4 col-lg-3 mb-4" key={index}>
               <div className="card h-100 text-center shadow-sm">
+                 <Link to={`/product?id=${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <img
                   src={product.images[0]}
                   className="card-img-top"
@@ -411,6 +430,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
                     {product.discount}% OFF
                   </span>
                 </div>
+              </Link>
                 <div className="card-footer d-flex justify-content">
                 <button
         className="btn btn-outline-primary w-50"

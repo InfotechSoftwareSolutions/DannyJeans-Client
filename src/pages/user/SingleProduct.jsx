@@ -1,57 +1,107 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef  } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import UserService from "../../services/user-api-service/UserService";
+import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
-const products = [
-  {
-    id: "1",
-    name: "Men's Black Regular Fit Utility Cargo Trousers",
-    price: 4399,
-    salePrice: 4136,
-    image: "/product1.jpg",
-    description: "Stylish and comfortable cargo trousers for men.",
-    color: "Black",
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    length: "32",
-  },
-  {
-    id: "2",
-    name: "Blue Denim Jeans",
-    price: 2999,
-    salePrice: 2799,
-    image: "/product2.jpg",
-    description: "Classic blue denim jeans with a regular fit.",
-    color: "Blue",
-    sizes: ["S", "M", "L", "XL"],
-    length: "32",
-  },
-];
+
 
 const SingleProduct = () => {
-  const { id } = useParams();
-  const product = products.find((item) => item.id === "2");
+    const { getSingleProduct, addToCart, addToWihlist } = UserService();
+    const {navigate} = useNavigate();
+     const { auth } = useAuth();
 
-  if (!product) {
-    return <h2>Product not found</h2>;
-  }
+    const [searchParams] = useSearchParams();
+    const [product, setProduct] = useState({});
+  // const { id } = useParams();
+const id = searchParams.get('id');
+
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false; // cleanup when unmounted
+    };
+  }, []);
+
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+console.log("id", id);
+  const getProduct = async () => {
+    try {
+      console.log("Fetching product with ID:");
+      const response = await getSingleProduct(id);
+      const product = response?.product;
+      console.log("Product data:", product);
+
+      if (product) {
+        setProduct(product);
+      }
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  };
+
+
+  const handleAddToCart = async (productId, quantity) => {
+    try {
+      if (auth?.name) {
+        const data = { productId, quantity };
+        const response = await addToCart(data);
+        response?.success ? toast.success(response.message) : toast.error(response.message);
+      } else {
+                console.log("not logged in");
+        if (isMounted.current) {
+          window.location.href = "/login";
+        }
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong.");
+    }
+  };
+
+  const handleAddToWishlist = async (productId, quantity) => {
+    try {
+      if (auth?.name) {
+        const data = { productId, quantity };
+        const response = await addToWihlist(data);
+        response?.success ? toast.success(response.message) : toast.error(response.message);
+      } else {
+              console.log("not logged in");
+        if (isMounted.current) {
+          window.location.href = "/login";
+        }
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong.");
+    }
+  };
+ 
 
   return (
     <div className="container mt-4">
       <div className="row">
         <div className="col-md-6">
-          <img src="https://www.ubuy.co.in/productimg/?image=aHR0cHM6Ly9pbWFnZXMtY2RuLnVidXkuY28uaW4vNjM0MDA0MDdhZDA1MmMyYzY1NmM3Y2Q2LWxlbGViZWFyLXN0cmV0Y2gtYW50aS13cmlua2xlLXNoaXJ0LW1lbi5qcGc.jpg" alt={product.name} className="img-fluid" />
+          <img src={product?.images?.[0]} alt={product?.name} style={{height: "600px"}} className="img-fluid" />
         </div>
         <div className="col-md-6">
-          <h2>{product.name}</h2>
-          <p className="text-muted">{product.description}</p>
+          <h2>{product?.name}</h2>
+          <p className="text-muted">{product?.description}</p>
           <h4>
-            Price: ₹{product.salePrice} <del>₹{product.price}</del>
+            Price: ₹{product?.sale_price
+} <del>₹{product?.product_price}</del>
           </h4>
-          <p>Color: {product.color}</p>
-          <p>Sizes Available: {product.sizes.join(", ")}</p>
-          <p>Length: {product.length}</p>
-          <button className="btn btn-dark">Add to Cart</button>
-          <button className="btn btn-danger ms-3">Buy Now</button>
+         
+          {/* <p>Sizes Available: {product?.sizes.join(", ")}</p> */}
+          {/* <p>Length: {product?.length}</p> */}
+          <button className="btn btn-dark" onClick={handleAddToCart}>Add to Cart</button>
+          <button className="btn btn-danger ms-3" onClick={handleAddToWishlist}>Wishlist</button>
         </div>
       </div>
     </div>

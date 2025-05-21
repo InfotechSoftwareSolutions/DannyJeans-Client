@@ -41,6 +41,7 @@ import PrivacyPolicy from "./pages/user/PrivacyPolicy";
 import TermsandConditions from "./pages/user/TermsandConditions";
 import UserLayout from "./components/layout/user-layout/UserLayout";
 import Contact from "./pages/user/Contact";
+import DefaultProtectedRoute from "./components/protected-route/DefaultProtectedRoute";
 
 
 
@@ -74,8 +75,8 @@ function App() {
           <Route path="/newarrival" element={<NewArrival />} />
 
           <Route path="/sale" element={<Sale />} />
-          <Route path="/singleproduct" element={<SingleProduct />} />
-          <Route path="/userprofile" element={<UserProfile />} />
+        
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/productlisting" element={<ProductListing />} />
           <Route path="/order" element={<Order />} />
@@ -85,6 +86,10 @@ function App() {
           <Route path="/terms-conditions" element={<TermsandConditions />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
+
+          <Route element={<DefaultProtectedRoute />}>
+            <Route path="/product" element={<SingleProduct />} />
+          </Route>
 
         
         <Route element={<AdminProtectedRoute />}>

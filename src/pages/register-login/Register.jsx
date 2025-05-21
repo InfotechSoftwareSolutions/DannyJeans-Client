@@ -32,6 +32,16 @@ const Register = () => {
     console.log(response);
 
   }
+   if (response?.data?.success) {
+
+      toast.success(response?.data?.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+
+    } else {
+      toast.error(response?.data?.message);
+    }
 
   // const handleRegister = async (e) => {
   //   e.preventDefault();
