@@ -176,8 +176,7 @@ clearState();
       name: "",
       description: "",
       parentCategory: "",
-      published: false,
-      image: null,
+ 
     })
     setIsModalOpen(false)
     setEditingCategory(null)
@@ -277,8 +276,7 @@ clearState();
               <th className="p-2 text-center">Name</th>
               <th className="p-2 text-center">Description</th>
               <th className="p-2 text-center">Parent Category</th>
-              {/* <th className="p-2">Published</th> */}
-              {/* <th className="p-2">Status</th> */}
+              
               <th className="p-2 text-center">Actions</th>
               <th className="p-2 text-center">Status</th>
             </tr>
@@ -376,19 +374,9 @@ clearState();
             />
 
             {/* Category Image Upload */}
-            <label className="block mb-2">Category Image</label>
-            <input type="file" className="w-full border p-2 rounded mb-2" onChange={handleImageUpload} />
-            
+           
             {/* Published Toggle */}
-            <label className="block mb-2 flex items-center">
-              <input
-                type="checkbox"
-                className="mr-2"
-                checked={newCategory.published}
-                onChange={(e) => setNewCategory({ ...newCategory, published: e.target.checked })}
-              />
-              Published
-            </label>
+          
 
             {/* Buttons */}
             <div className="flex justify-end gap-2">

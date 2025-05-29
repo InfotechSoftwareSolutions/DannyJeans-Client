@@ -92,6 +92,7 @@ const ProductTable = () => {
         setProducts(response.categories)
         setEditProductId(null);
         setIsModalOpen(false);
+        window.location.reload();
 
   //       if (editingCategory) {
          

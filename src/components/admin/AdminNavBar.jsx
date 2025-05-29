@@ -100,6 +100,14 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
+  const onHandleLogout = async () => {
+    // Clear local storage
+    localStorage.clear();
+
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
+  };
+
   return (
     <>
       {/* Mobile Menu Button */}
@@ -222,7 +230,7 @@ const Sidebar = () => {
         </ul>
 
         {/* Logout Button */}
-        <div className="absolute bottom-4 left-4 flex items-center gap-2 p-3 bg-green-600 text-white rounded cursor-pointer w-[90%]">
+        <div onClick={onHandleLogout} className="absolute bottom-4 left-4 flex items-center gap-2 p-3 bg-green-600 text-white rounded cursor-pointer w-[90%]">
           <FaSignOutAlt size={20} />
           <span>Log Out</span>
         </div>

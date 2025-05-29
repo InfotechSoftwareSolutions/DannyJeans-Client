@@ -131,10 +131,10 @@ return;
               setDeliveryStatus(product?.deliveryStatus)
             }}
           >
-            <img src={product?.orderItems?.[0].product?.images[0]} alt={product?.orderItems?.[0]?.product?.name} className="w-full h-32 object-contain rounded-md mb-3" />
-            <h2 className="text-lg font-semibold">{product?.orderItems?.[0].product?.name}</h2>
-            <p className="text-gray-600 text-sm">Price: ₹{product?.orderItems?.[0].product?.sale_price}</p>
-            <p className="text-gray-500 text-sm">Quantity: {product?.orderItems?.[0].quantity}</p>
+            <img src={product?.orderItems?.product?.images[0]} alt={product?.orderItems?.product?.name} className="w-full h-32 object-contain rounded-md mb-3" />
+            <h2 className="text-lg font-semibold">{product?.orderItems?.product?.name}</h2>
+            <p className="text-gray-600 text-sm">Price: ₹{product?.orderItems?.product?.sale_price}</p>
+            <p className="text-gray-500 text-sm">Quantity: {product?.orderItems?.quantity}</p>
             <p className="text-gray-500 text-sm">Total Price:  ₹{product?.totalPrice}</p>
           </div>
         ))}
@@ -153,10 +153,10 @@ return;
             </button>
 
             {/* Product Details */}
-            <img src={selectedProduct?.orderItems?.[0].product?.images[0]} alt={selectedProduct.name} className="w-full h-48 object-contain rounded-md mb-4" />
-            <h1 className="text-2xl font-bold mb-2">{selectedProduct.orderItems?.[0].product?.name}</h1>
-            <p className="text-gray-500 text-md">Price: ₹{selectedProduct.orderItems?.[0].product?.sale_price}</p>
-            <p className="text-gray-500 text-md">Quantity: <span className="font-medium">{selectedProduct.orderItems?.[0].quantity}</span></p>
+            <img src={selectedProduct?.orderItems?.product?.images[0]} alt={selectedProduct.name} className="w-full h-48 object-contain rounded-md mb-4" />
+            <h1 className="text-2xl font-bold mb-2">{selectedProduct.orderItems?.product?.name}</h1>
+            <p className="text-gray-500 text-md">Price: ₹{selectedProduct.orderItems?.product?.sale_price}</p>
+            <p className="text-gray-500 text-md">Quantity: <span className="font-medium">{selectedProduct.orderItems?.quantity}</span></p>
             <p className="text-gray-500 text-md">Total Price: <span className="font-medium"> ₹{selectedProduct.totalPrice}</span></p>
             <p className={`text-md font-semibold ${selectedProduct.status === "Available" ? "text-green-600" : "text-red-500"}`}>
               Status: {selectedProduct.deliveryStatus}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/user-api-service/UserService";
 import useAuth from "../../hooks/useAuth";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +28,8 @@ const Login = () => {
 
     if (response?.data?.success) {
 
+      toast.success(response?.data?.message);
+
       const accessToken = response?.data?.accessToken;
       const role = response?.data?.userData?.role;
       const image = response?.data?.userData?.image || "";
@@ -41,7 +44,9 @@ const Login = () => {
 
     setAuth({ accessToken, role, image, name })
 
-      switch(role){
+       setTimeout(() => {
+      
+          switch(role){
           case 'admin':
               navigate("/dashboard")
               break
@@ -49,10 +54,14 @@ const Login = () => {
               navigate("/")
               break
       }
+      }, 1500);
+
+    
     }
 
    } catch (error) {
-    console.log(error);
+   toast.error(error?.response?.data?.message);
+       console.log(error);
     
    }
 }
@@ -60,6 +69,10 @@ const Login = () => {
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
+       <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
       <div className="card p-4 shadow" style={{ width: "400px" }}>
         <h2 className="text-center">Login</h2>
         <form onSubmit={handleLogin}>

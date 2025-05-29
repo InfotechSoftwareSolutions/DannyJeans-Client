@@ -13,6 +13,7 @@ import UserService from "../../services/user-api-service/UserService";
 import toast, { Toaster } from 'react-hot-toast';
 import UserNavBar from "../../components/user/UserNavBar";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 // import { CategoryContext } from "../../contexts/CategoryContext";
 
 
@@ -24,6 +25,7 @@ const App = () => {
   // const {products,setProducts,} = useContext(CategoryContext);
   const navigate = useNavigate();
   const scrollRef = useRef(null);
+    const {auth} = useAuth();
 
 
 
@@ -82,14 +84,22 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
 
   const handleAddToCart = async(productId )=> {
     try {  const userId = "67cab9e83d25f6b91d29d67b";
+      if(auth?.name){
+
+    
       const quantity = 1;
       const data = {userId,productId, quantity}
       const response = await addToCart(data);
       console.log(response);
       toast.success(response?.message)
+        }else{
+            navigate("/login");
+        }
     } catch (error) {
+       toast.error(error?.response?.data?.message);
+       console.log(error,"error handlecart")
      
-      navigate("/login");
+    
     }
   
 
@@ -97,16 +107,23 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
 
   const handleAddToWishlist = async(productId)=> {
     try{
+      if(auth?.name){
+
+     
      
     const quantity = 1;
     const data = {productId, quantity}
     const response = await addToWihlist(data);
     console.log(response);
     toast.success(response?.message)
+     }else{
+        navigate("/login");
+     }
     }
     catch(error){
+       toast.error(error?.response?.data?.message);
       
-      navigate("/login");
+     
     }
   }
 
@@ -280,7 +297,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
 
         {/* Mobile View */}
         <div className="md:hidden flex justify-center gap-5">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" onClick={() => handleSubFilter("trending")}>
             <img
               src="/A1.jpg"
               alt="Top Trending"
@@ -289,7 +306,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
             <span className="text-sm font-medium mt-2">Top Trending</span>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" onClick={() => handleSubFilter("offers")} >
             <img
               src="/Carnew.webp"
               alt="Today's Offers"
@@ -298,7 +315,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
             <span className="text-sm font-medium mt-2">Today's Offers</span>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" onClick={() => handleSubFilter("newArrivals")}>
             <img
               src="/A2.jpg"
               alt="New Arrivals"
@@ -354,6 +371,7 @@ const [subFilterHeading, setSubFilterHeading] = useState("New Arrivals");
                 src={product.images[0]}
                 className="card-img-top"
                 alt={product.name}
+                style={{height:'500px'}}
               />
               <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>

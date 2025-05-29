@@ -4,12 +4,12 @@ import { Formik, Form, ErrorMessage, useFormikContext } from "formik";
 import * as Yup from "yup";
 import ImageUploader from "./Imageuploader";
 import AdminService from "../../services/admin-api-service/AdminService";
-import Varient from "./Variant";
+// import Varient from "./Variant";
 
 const AddProduct = () => {
   const { addToProduct, getCategoryeData, getOffer } = AdminService();
 
-  const [hasVariants, setHasVariants] = useState(false);
+  // const [hasVariants, setHasVariants] = useState(false);
   const [colors, setColors] = useState([]);
   const [categories, setCategories] = useState([]);
   const [offers, setOffers] = useState([]);
@@ -98,7 +98,7 @@ const AddProduct = () => {
           formData.append("description", values.description);
           formData.append("tags", values.tags);
           formData.append("offer", values.offer);
-          formData.append("variant", JSON.stringify(product.varient));
+          // formData.append("variant", JSON.stringify(product.varient));
           formData.append("category", values.category);
 
           values.images.forEach((image) => {
@@ -135,7 +135,7 @@ const AddProduct = () => {
           </p>
 
           {/* Variants Toggle */}
-          <div className="flex justify-end items-center mb-5">
+          {/* <div className="flex justify-end items-center mb-5">
             <span className="text-orange-500 mr-2">
               Does this product have variants?
             </span>
@@ -151,7 +151,7 @@ const AddProduct = () => {
                 }`}
               ></div>
             </button>
-          </div>
+          </div> */}
 
           {/* Form Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -288,7 +288,7 @@ const AddProduct = () => {
             )}
           </div>
 
-          <Varient product={product} setProduct={setProduct} />
+          {/* <Varient product={product} setProduct={setProduct} /> */}
 
           {/* <div className="mt-4">
 //         <label className="block font-medium">Product Images</label>

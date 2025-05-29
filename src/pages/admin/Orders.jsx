@@ -43,7 +43,7 @@ const OrderTable = () => {
               <th className="p-2 text-center">Name</th>
               <th className="p-2 text-center">Phone Number</th>
               <th className="p-2 text-center">Product</th>
-              <th className="p-2 text-center"></th>
+         
               <th className="p-2 text-center">Status</th>
             </tr>
           </thead>
@@ -53,42 +53,44 @@ const OrderTable = () => {
                 <td className="p-2 text-center">{order._id}</td>
                 <td className="p-2 text-center">{order?.user?.name}</td>
                 <td className="p-2 text-center">{order?.user?.phone}</td>
-                <td className="p-2 text-center">
-                  {order?.orderItems?.map((product, index) => (
+
+                  <td className="p-2 text-center">
+                  {/* {order?.orderItems?.map((product, index) => ( */}
                     <div
-                      key={index}
+                      // key={index}
                       className="flex items-center space-x-2 border-b py-2"
                     >
                       <img
-                        src={product?.product?.images?.[0]}
-                        alt={product.name}
+                        src={order?.orderItems?.product?.images[0]}
+                        alt={order?.orderItems?.product?.name}
                         className="w-10 h-10 object-cover rounded"
                       />
                       <div>
                         <p className="font-semibold">
-                          {product?.product?.name}
+                          {order?.orderItems?.product?.name}
                         </p>
                         <p className="text-xs text-gray-500">
-                          Qty: {product?.quantity}
+                          Qty: {order?.orderItems?.quantity}
                         </p>
                         <p className="text-xs text-gray-500">
-                          Amount: ${product?.product?.sale_price}
+                          Amount: ${order?.orderItems?.product?.sale_price}
                         </p>
                         <p className="text-xs text-gray-500">
                           Total: ${order?.totalPrice}
                         </p>
                       </div>
                     </div>
-                  ))}
+                  {/* ))} */}
                 </td>
-                <td className="p-2 text-center">
+          
+                {/* <td className="p-2 text-center">
                   <button
                     onClick={() => setSelectedOrder(order)}
                     className="px-3 py-1 bg-blue-500 text-white rounded text-xs"
                   >
                     Show Details
                   </button>
-                </td>
+                </td> */}
                 <td className="p-2 text-center">
                   <select
                     value={order?.deliveryStatus}

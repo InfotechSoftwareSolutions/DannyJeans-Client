@@ -186,7 +186,7 @@ const UserProfile = () => {
             </div>
 
             {/* Buttons */}
-            <div className="text-end">
+            {/* <div className="text-end">
               {editing ? (
                 <button
                   className="btn btn-success px-4 mx-2"
@@ -202,7 +202,7 @@ const UserProfile = () => {
                   ✏️ Edit Profile
                 </button>
               )}
-            </div>
+            </div> */}
           </div>
 
           <div>

@@ -148,6 +148,7 @@ const Offers = () => {
         const response = await updateOffer(editingOffer._id, offerData);
         setOffers(response.offers);
         clearState();
+        window.location.reload();
       } else {
         const response = await AddOffer(offerData);
         console.log("API Response:", response); // Debugging
