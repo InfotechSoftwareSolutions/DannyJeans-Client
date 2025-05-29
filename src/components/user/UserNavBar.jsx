@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CategoryContext } from "../../contexts/categoryContext";
+import { CategoryContext } from "../../contexts/CategoryContext";
 import UserService from "../../services/user-api-service/UserService"; // Adjust path if needed
 import useAuth from "../../hooks/useAuth";
 

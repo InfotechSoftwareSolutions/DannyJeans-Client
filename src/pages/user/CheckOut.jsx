@@ -413,7 +413,7 @@ const CheckoutPage = () => {
                     key={address._id}
                     className={`p-3 rounded-3 mb-3 ${
                       selectedAddress === address._id
-                        ? " border-primary border-2"
+                        ? "border-primary border-2"
                         : "border border-light"
                     }`}
                     style={{ cursor: "pointer", background: "rgb(220, 213, 235)" }}
